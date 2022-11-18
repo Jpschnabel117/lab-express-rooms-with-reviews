@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <nav><div>
+        <a href="/">Home | </a>
+        <a href="/auth/signup">Sign Up | </a>
+        <a href="/login">Log In | </a>
+        <a href="/userProfile">Profile | </a>
+      </div>
+      <div>
+        <form id="logout-form" action="/logout" method="POST">
+          <button>Logout</button>
+        </form>
+      </div>
+    </nav>
+    {{{body}}}
+  </body>
+</html>
