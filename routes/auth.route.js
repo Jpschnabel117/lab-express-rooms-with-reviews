@@ -46,8 +46,9 @@ router.post("/signup", isAnon, (req, res, next) => {
     })
     .then((createdUser) => {
       console.log("created user: ", createdUser);
-      res.redirect("/userProfile");
-    })
+      req.session.currentUser = createdUser;
+      res.redirect("/auth/userProfile");
+    }) //fix username repeat error
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
         res.status(500).render("auth/signup", { errorMessage: err.message });
@@ -62,10 +63,59 @@ router.post("/signup", isAnon, (req, res, next) => {
     });
 });
 
-router.get("/userProfile", isLoggedIn, (req, res) => {
-  res.render("user-profile", {
+router.get("/userProfile", (req, res) => {
+  res.render("auth/user-profile", {
     userInSession: req.session.currentUser,
   });
 });
 
+router.get("/login", isAnon, (req, res, next) => {
+  res.render("auth/login");
+});
+
+router.post("/login", isAnon, (req, res, next) => {
+  if (!req.body.username || !req.body.password) {
+    res.render("auth/login", {
+      errorMessage:
+        "All fields are mandatory. Please provide your username and password.",
+    });
+    return;
+  }
+
+  console.log(req.body);
+  let userPwCheck = "";
+  //hash inputed password check
+  User.findOne({ username: req.body.username })
+    .then((founduser) => {
+      console.log("tryed PW: ", req.body.username);
+      console.log("actual PW: ", userPwCheck);
+      if (!founduser) {
+        res.render("auth/login", {
+          errorMessage: "that username does not exist",
+        });
+        return;
+      } else if (bcryptjs.compareSync(req.body.password, founduser.password)) {
+        console.log("correct PW");
+        //res.render("/userProfile", { user: req.body.user });
+        req.session.currentUser = founduser;
+        req.session.hi = "hello";
+        res.redirect("/auth/userProfile");
+      } else {
+        res.status(500).render("auth/login", {
+          errorMessage: "incorrect password",
+        });
+        return;
+      }
+    })
+    .catch((err) => next(err));
+});
+
+router.post("/logout", (req, res, next) => {
+  req.session.destroy((err) => {
+    if (err) {
+      next(err);
+    }
+    res.redirect("/");
+  });
+});
 module.exports = router;

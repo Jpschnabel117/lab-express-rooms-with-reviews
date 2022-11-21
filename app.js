@@ -22,12 +22,12 @@ app.use(express.static(path.join(__dirname, "public")));
 var indexRouter = require("./routes/index");
 // var usersRouter = require("./routes/users");
 // var reviewsRouter = require("./routes/reviews.auth")
-// var roomsRouter = require("./routes/rooms.route")
+var roomsRouter = require("./routes/rooms.route")
 var authRouter = require("./routes/auth.route");
 app.use("/", indexRouter);
 // app.use("/users", usersRouter);
 // app.use("/review", reviewsRouter);
-// app.use("/rooms", roomsRouter);
+app.use("/rooms", roomsRouter);
 app.use("/auth", authRouter);
 
 // catch 404 and forward to error handler
@@ -53,6 +53,6 @@ mongoose
   )
   .catch((err) => console.error("Error connecting to mongo", err));
 
-require("./error-handling")(app);
+//require("./error-handling")(app);
 
 module.exports = app;

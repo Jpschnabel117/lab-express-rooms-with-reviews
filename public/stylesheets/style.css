@@ -10,3 +10,36 @@ nav {
   display: flex;
   justify-content: space-between;
 }
+
+.validationErrors {
+  background-color: crimson;
+  width: 300px;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+}
+
+.submitbuttons {
+  width: 310px;
+  background-color: #00b7ff;
+  border-radius: 5px;
+  border-color: #00b7ff;
+}
+
+.listedRoom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: beige;
+  padding-left: 10px;
+  border-color: red;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+#listofrooms {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin-top: 20px;
+}

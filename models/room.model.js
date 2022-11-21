@@ -1,7 +1,10 @@
 const { Schema, model } = require("mongoose");
 
 const roomSchema = new Schema({
-  name: { type: String },
+  name: {
+    type: String,
+    unique: true,
+  },
   description: { type: String },
   imageUrl: { type: String },
   owner: { type: Schema.Types.ObjectId, ref: "User" },

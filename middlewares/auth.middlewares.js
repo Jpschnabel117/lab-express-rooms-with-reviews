@@ -12,7 +12,7 @@ const isAnon = (req, res, next) => {
   //middleware
   if (req.session.currentUser) {
     //checking if logged in to go to profile
-    res.redirect("/userProfile");
+    res.redirect("/auth/userProfile");
     return;
   }
   next();

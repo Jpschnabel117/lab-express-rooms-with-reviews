@@ -1,0 +1,21 @@
+<h1>Create Room</h1>
+<form action="/rooms/createroom" method="POST">
+  <div>
+    <label>
+      name
+      <input type="text" name="name" placeholder="" />
+    </label>
+  </div>
+  <div>
+    <label>
+      description
+      <input type="text" name="description" placeholder="" />
+    </label>
+  </div>
+  <button class="submitbuttons" type="submit">Create Room</button>
+</form>
+<div class="validationErrors">
+  {{#if errorMessage}}
+    <p class="error">{{errorMessage}}</p>
+  {{/if}}
+</div>
